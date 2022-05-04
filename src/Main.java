@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -11,7 +14,6 @@ public class Main {
 
         openZip(zipSave, pathToSave);
         System.out.println(openProgress(pathToSave + "save3.date"));
-
 
     }
 
@@ -30,8 +32,6 @@ public class Main {
                 zin.closeEntry();
                 fos.close();
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,11 +42,7 @@ public class Main {
         try (FileInputStream fis = new FileInputStream(path);
              ObjectInputStream ois = new ObjectInputStream(fis)) {
             gameProgress = (GameProgress) ois.readObject();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
         return gameProgress;
